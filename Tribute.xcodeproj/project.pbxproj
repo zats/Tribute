@@ -7,13 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C68695C1C077A490087A134 /* Nimble.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695A1C077A490087A134 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5C68695D1C077A490087A134 /* Quick.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695B1C077A490087A134 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5C68695E1C077A530087A134 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695A1C077A490087A134 /* Nimble.framework */; };
+		5C68695F1C077A530087A134 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695B1C077A490087A134 /* Quick.framework */; };
 		5CD6E7551C07708B004623E6 /* Tribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CD6E7541C07708B004623E6 /* Tribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5CD6E75D1C077099004623E6 /* Tribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD6E75C1C077099004623E6 /* Tribute.swift */; };
+		5CD6E7651C0770A7004623E6 /* TributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD6E7641C0770A7004623E6 /* TributeTests.swift */; };
+		5CD6E7671C0770A7004623E6 /* Tribute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD6E7511C07708B004623E6 /* Tribute.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5CD6E7681C0770A7004623E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5CD6E7481C07708B004623E6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CD6E7501C07708B004623E6;
+			remoteInfo = Tribute;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5C6869591C077A270087A134 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5C68695C1C077A490087A134 /* Nimble.framework in Copy Frameworks */,
+				5C68695D1C077A490087A134 /* Quick.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		5C68695A1C077A490087A134 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		5C68695B1C077A490087A134 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = ../Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		5CD6E7511C07708B004623E6 /* Tribute.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tribute.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CD6E7541C07708B004623E6 /* Tribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tribute.h; sourceTree = "<group>"; };
 		5CD6E7561C07708B004623E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CD6E75C1C077099004623E6 /* Tribute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tribute.swift; sourceTree = "<group>"; };
+		5CD6E7621C0770A7004623E6 /* TributeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TributeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CD6E7641C0770A7004623E6 /* TributeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TributeTests.swift; sourceTree = "<group>"; };
+		5CD6E7661C0770A7004623E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,13 +62,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5CD6E75F1C0770A7004623E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CD6E7671C0770A7004623E6 /* Tribute.framework in Frameworks */,
+				5C68695E1C077A530087A134 /* Nimble.framework in Frameworks */,
+				5C68695F1C077A530087A134 /* Quick.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C6869601C077A980087A134 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5C68695A1C077A490087A134 /* Nimble.framework */,
+				5C68695B1C077A490087A134 /* Quick.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5CD6E7471C07708B004623E6 = {
 			isa = PBXGroup;
 			children = (
 				5CD6E7531C07708B004623E6 /* Tribute */,
+				5CD6E7631C0770A7004623E6 /* TributeTests */,
 				5CD6E7521C07708B004623E6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				5CD6E7511C07708B004623E6 /* Tribute.framework */,
+				5CD6E7621C0770A7004623E6 /* TributeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -47,9 +106,20 @@
 			isa = PBXGroup;
 			children = (
 				5CD6E7541C07708B004623E6 /* Tribute.h */,
+				5CD6E75C1C077099004623E6 /* Tribute.swift */,
 				5CD6E7561C07708B004623E6 /* Info.plist */,
 			);
 			path = Tribute;
+			sourceTree = "<group>";
+		};
+		5CD6E7631C0770A7004623E6 /* TributeTests */ = {
+			isa = PBXGroup;
+			children = (
+				5CD6E7641C0770A7004623E6 /* TributeTests.swift */,
+				5C6869601C077A980087A134 /* Frameworks */,
+				5CD6E7661C0770A7004623E6 /* Info.plist */,
+			);
+			path = TributeTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,16 +154,39 @@
 			productReference = 5CD6E7511C07708B004623E6 /* Tribute.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		5CD6E7611C0770A7004623E6 /* TributeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5CD6E76A1C0770A7004623E6 /* Build configuration list for PBXNativeTarget "TributeTests" */;
+			buildPhases = (
+				5CD6E75E1C0770A7004623E6 /* Sources */,
+				5CD6E75F1C0770A7004623E6 /* Frameworks */,
+				5CD6E7601C0770A7004623E6 /* Resources */,
+				5C6869591C077A270087A134 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5CD6E7691C0770A7004623E6 /* PBXTargetDependency */,
+			);
+			name = TributeTests;
+			productName = TributeTests;
+			productReference = 5CD6E7621C0770A7004623E6 /* TributeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		5CD6E7481C07708B004623E6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Sash Zats";
 				TargetAttributes = {
 					5CD6E7501C07708B004623E6 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					5CD6E7611C0770A7004623E6 = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
@@ -111,12 +204,20 @@
 			projectRoot = "";
 			targets = (
 				5CD6E7501C07708B004623E6 /* Tribute */,
+				5CD6E7611C0770A7004623E6 /* TributeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5CD6E74F1C07708B004623E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CD6E7601C0770A7004623E6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -130,10 +231,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CD6E75D1C077099004623E6 /* Tribute.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5CD6E75E1C0770A7004623E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CD6E7651C0770A7004623E6 /* TributeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5CD6E7691C0770A7004623E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5CD6E7501C07708B004623E6 /* Tribute */;
+			targetProxy = 5CD6E7681C0770A7004623E6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5CD6E7571C07708B004623E6 /* Debug */ = {
@@ -173,7 +291,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -215,7 +333,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -228,6 +346,25 @@
 		5CD6E75A1C07708B004623E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Tribute/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zats.Tribute;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5CD6E75B1C07708B004623E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -239,21 +376,33 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
-			name = Debug;
+			name = Release;
 		};
-		5CD6E75B1C07708B004623E6 /* Release */ = {
+		5CD6E76B1C0770A7004623E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Tribute/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = TributeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zats.Tribute;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zats.TributeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		5CD6E76C1C0770A7004623E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = TributeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zats.TributeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -276,6 +425,16 @@
 				5CD6E75B1C07708B004623E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5CD6E76A1C0770A7004623E6 /* Build configuration list for PBXNativeTarget "TributeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5CD6E76B1C0770A7004623E6 /* Debug */,
+				5CD6E76C1C0770A7004623E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

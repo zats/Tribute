@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TributeTests/TributeTests.swift"
+            timestampString = "470631019.976721"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "spec()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TributeTests.TributeSpec.(spec (TributeTests.TributeSpec) -&gt; () -&gt; ()).(closure #1).(closure #6).(closure #1)"
+                  moduleName = "TributeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zats/Documents/Tribute/TributeTests/TributeTests.swift"
+                  timestampString = "470376186.96145"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "1407">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TributeTests.TributeSpec.(spec (TributeTests.TributeSpec) -&gt; () -&gt; ()).(closure #1).(closure #6).(closure #1).(implicit closure #2)"
+                  moduleName = "TributeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zats/Documents/Tribute/TributeTests/TributeTests.swift"
+                  timestampString = "470376186.961765"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
