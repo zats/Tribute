@@ -526,7 +526,40 @@ class TributeSpec: QuickSpec {
                         a.strikethrough = .StyleThick
                     }
                     string.add("potato") { (inout a: Attributes) in
-                        a.font = nil
+                        a.strikethrough = nil
+                    }
+                    expect(string.lastAttributes).to(haveCount(0))
+                }
+            }
+            
+            describe("strikethroughColor") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.strikethroughColor = .redColor()
+                    }
+                    expect(string.lastAttributes!).to(haveCount(1))
+                    expect(string.lastAttributes![NSStrikethroughColorAttributeName] as? UIColor).to(equal(UIColor.redColor()))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.strikethroughColor = .redColor()
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.lastAttributes!).to(haveCount(1))
+                        expect(string.lastAttributes![NSStrikethroughColorAttributeName] as? UIColor).to(equal(UIColor.redColor()))
+                        a.strikethroughColor = .blueColor()
+                    }
+                    expect(string.lastAttributes!).to(haveCount(1))
+                    expect(string.lastAttributes![NSStrikethroughColorAttributeName] as? UIColor).to(equal(UIColor.blueColor()))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.strikethroughColor = .redColor()
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.strikethroughColor = nil
                     }
                     expect(string.lastAttributes).to(haveCount(0))
                 }
@@ -567,7 +600,7 @@ class TributeSpec: QuickSpec {
                 
             }
             
-            describe("stroke color") {
+            describe("strokeColor") {
                 it("sets new value") {
                     string.add("potato") { (inout a: Attributes) in
                         a.strokeColor = .redColor()
@@ -675,6 +708,39 @@ class TributeSpec: QuickSpec {
                     }
                     string.add("potato") { (inout a: Attributes) in
                         a.underline = nil
+                    }
+                    expect(string.lastAttributes).to(haveCount(0))
+                }
+            }
+
+            describe("underlineColor") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.underlineColor = .redColor()
+                    }
+                    expect(string.lastAttributes!).to(haveCount(1))
+                    expect(string.lastAttributes![NSUnderlineColorAttributeName] as? UIColor).to(equal(UIColor.redColor()))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.underlineColor = .redColor()
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.lastAttributes!).to(haveCount(1))
+                        expect(string.lastAttributes![NSUnderlineColorAttributeName] as? UIColor).to(equal(UIColor.redColor()))
+                        a.underlineColor = .blueColor()
+                    }
+                    expect(string.lastAttributes!).to(haveCount(1))
+                    expect(string.lastAttributes![NSUnderlineColorAttributeName] as? UIColor).to(equal(UIColor.blueColor()))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.underlineColor = .redColor()
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.underlineColor = nil
                     }
                     expect(string.lastAttributes).to(haveCount(0))
                 }
