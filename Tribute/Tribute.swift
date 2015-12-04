@@ -215,11 +215,15 @@ extension Attributes {
 
 
 extension NSAttributedString {
-    var runningAttributes: [String: AnyObject]? {
+    private var runningAttributes: [String: AnyObject]? {
         guard length > 0 else {
             return nil
         }
         return attributesAtIndex(length - 1, effectiveRange: nil)
+    }
+    
+    private var fullRange: NSRange {
+        return NSRange(location: 0, length: length)
     }
 }
 
@@ -242,7 +246,21 @@ public extension NSMutableAttributedString {
 }
 
 public extension NSMutableAttributedString {
-    public func addImage(image: UIImage, resetRunningAttributes: Bool = false, setter: AttributeSetter? = nil) -> NSMutableAttributedString {
+    public func add(image: UIImage, setter: AttributeSetter? = nil) -> NSMutableAttributedString {
+        var attributes: Attributes
+        if let runningAttributes = self.runningAttributes {
+            attributes = Attributes(rawAttributes: runningAttributes)
+        } else {
+            attributes = Attributes()
+        }
+        setter?(attributes: &attributes)
+
+        let attachment = NSTextAttachment()
+        attachment.image = image
+        
+        let string = NSMutableAttributedString(attributedString: NSAttributedString(attachment: attachment))
+        string.setAttributes(attributes.rawAttributes, range: string.fullRange)
+        appendAttributedString(string)
         return self
     }
 }

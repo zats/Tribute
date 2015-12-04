@@ -11,6 +11,8 @@
 		5C68695D1C077A490087A134 /* Quick.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695B1C077A490087A134 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5C68695E1C077A530087A134 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695A1C077A490087A134 /* Nimble.framework */; };
 		5C68695F1C077A530087A134 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695B1C077A490087A134 /* Quick.framework */; };
+		5C6AEDE41C12060000C22FAC /* swift.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C6AEDE21C12060000C22FAC /* swift.png */; };
+		5C6AEDE51C12060000C22FAC /* swift@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C6AEDE31C12060000C22FAC /* swift@2x.png */; };
 		5CD6E7551C07708B004623E6 /* Tribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CD6E7541C07708B004623E6 /* Tribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5CD6E75D1C077099004623E6 /* Tribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD6E75C1C077099004623E6 /* Tribute.swift */; };
 		5CD6E7651C0770A7004623E6 /* TributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD6E7641C0770A7004623E6 /* TributeTests.swift */; };
@@ -46,6 +48,8 @@
 		5C68695A1C077A490087A134 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		5C68695B1C077A490087A134 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = ../Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		5C6AEDE01C1131BA00C22FAC /* Tribute.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Tribute.playground; sourceTree = "<group>"; };
+		5C6AEDE21C12060000C22FAC /* swift.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swift.png; sourceTree = "<group>"; };
+		5C6AEDE31C12060000C22FAC /* swift@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swift@2x.png"; sourceTree = "<group>"; };
 		5CD6E7511C07708B004623E6 /* Tribute.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tribute.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CD6E7541C07708B004623E6 /* Tribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tribute.h; sourceTree = "<group>"; };
 		5CD6E7561C07708B004623E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +89,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5C6AEDE11C12060000C22FAC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5C6AEDE21C12060000C22FAC /* swift.png */,
+				5C6AEDE31C12060000C22FAC /* swift@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		5CD6E7471C07708B004623E6 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +130,7 @@
 		5CD6E7631C0770A7004623E6 /* TributeTests */ = {
 			isa = PBXGroup;
 			children = (
+				5C6AEDE11C12060000C22FAC /* Resources */,
 				5CD6E7641C0770A7004623E6 /* TributeTests.swift */,
 				5C6869601C077A980087A134 /* Frameworks */,
 				5CD6E7661C0770A7004623E6 /* Info.plist */,
@@ -223,6 +237,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C6AEDE51C12060000C22FAC /* swift@2x.png in Resources */,
+				5C6AEDE41C12060000C22FAC /* swift.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

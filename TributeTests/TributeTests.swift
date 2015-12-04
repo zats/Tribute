@@ -789,6 +789,42 @@ class TributeSpec: QuickSpec {
             }
             
         }
+        
+        context("image") {
+            describe("adding image") {
+                var image: UIImage!
+                beforeSuite {
+                    let bundle = NSBundle(forClass: self.dynamicType)
+                    image = UIImage(named: "swift", inBundle: bundle, compatibleWithTraitCollection: nil)!
+                }
+                
+                it("just works") {
+                    let length = string.length
+                    string.add(image)
+                    // Seems like the best we can do for now 😞
+                    expect(string.length).to(equal(length + 1))
+                }
+
+                it("keeps existent attributes") {
+                    string.add("banana") {
+                        $0.color = .redColor()
+                        $0.font = .systemFontOfSize(20)
+                    }
+                    string.add(image)
+                    expect(string.lastAttributes?[NSFontAttributeName] as? UIFont).to(equal(UIFont.systemFontOfSize(20)))
+                    expect(string.lastAttributes?[NSForegroundColorAttributeName] as? UIColor).to(equal(UIColor.redColor()))
+                }
+                
+                it("applies new attributes") {
+                    string.add(image) {
+                        $0.color = .redColor()
+                        $0.font = .boldSystemFontOfSize(12)
+                    }
+                    expect(string.lastAttributes?[NSFontAttributeName] as? UIFont).to(equal(UIFont.boldSystemFontOfSize(12)))
+                    expect(string.lastAttributes?[NSForegroundColorAttributeName] as? UIColor).to(equal(UIColor.redColor()))
+                }
+            }
+        }
     }
 }
 
