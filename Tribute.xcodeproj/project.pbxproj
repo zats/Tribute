@@ -45,6 +45,7 @@
 /* Begin PBXFileReference section */
 		5C68695A1C077A490087A134 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		5C68695B1C077A490087A134 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = ../Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		5C6AEDE01C1131BA00C22FAC /* Tribute.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Tribute.playground; sourceTree = "<group>"; };
 		5CD6E7511C07708B004623E6 /* Tribute.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tribute.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CD6E7541C07708B004623E6 /* Tribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tribute.h; sourceTree = "<group>"; };
 		5CD6E7561C07708B004623E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,6 +88,7 @@
 		5CD6E7471C07708B004623E6 = {
 			isa = PBXGroup;
 			children = (
+				5C6AEDE01C1131BA00C22FAC /* Tribute.playground */,
 				5CD6E7531C07708B004623E6 /* Tribute */,
 				5CD6E7631C0770A7004623E6 /* TributeTests */,
 				5CD6E7521C07708B004623E6 /* Products */,
