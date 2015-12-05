@@ -18,6 +18,27 @@ class TributeSpec: QuickSpec {
         beforeEach{
             string = NSMutableAttributedString()
         }
+        
+        context("internals") {
+            // we are testing implementation details only to use internal methods as a part of the test flow
+            describe("runningAttributes") {
+                it("should report nil if string is empty") {
+                    expect(string.runningAttributes).to(beNil())
+                }
+                
+                it("should report last attributes if string is not empty") {
+                    let attributes: [String: NSObject] = [
+                        NSFontAttributeName: UIFont.boldSystemFontOfSize(12),
+                        NSForegroundColorAttributeName: UIColor.redColor()
+                    ]
+                    string.appendAttributedString(NSAttributedString(string: "persimmon", attributes: attributes))
+                    expect(string.runningAttributes).to(haveCount(attributes.count))
+                    for (key, value) in attributes {
+                        expect(string.runningAttributes?[key] as? NSObject).to(equal(value))
+                    }
+                }
+            }
+        }
 
         context("sanity") {
             describe("empty string") {
