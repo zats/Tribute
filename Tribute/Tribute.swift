@@ -259,7 +259,7 @@ public extension NSMutableAttributedString {
         attachment.image = image
         
         let string = NSMutableAttributedString(attributedString: NSAttributedString(attachment: attachment))
-        string.setAttributes(attributes.rawAttributes, range: string.fullRange)
+        string.addAttributes(attributes.rawAttributes, range: string.fullRange)
         appendAttributedString(string)
         return self
     }
