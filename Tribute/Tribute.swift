@@ -33,6 +33,7 @@ public struct Attributes {
 
     public var alignment: NSTextAlignment?
     public var backgroundColor: UIColor?
+    public var baseline: Float?
     public var color: UIColor?
     public var direction: GlyphDirection?
     public var expansion: Float?
@@ -113,6 +114,7 @@ private extension Attributes.GlyphDirection {
 extension Attributes {
     init(rawAttributes attributes: RawAttributes) {
         self.backgroundColor = attributes[NSBackgroundColorAttributeName] as? UIColor
+        self.baseline = attributes[NSBaselineOffsetAttributeName] as? Float
         self.color = attributes[NSForegroundColorAttributeName] as? UIColor
         if let direction = attributes[NSVerticalGlyphFormAttributeName] as? Int {
             self.direction = GlyphDirection(intValue: direction)
@@ -152,6 +154,7 @@ extension Attributes {
 extension Attributes {
     mutating public func reset() {
         backgroundColor = nil
+        baseline = nil
         color = nil
         direction = nil
         expansion = nil
@@ -186,6 +189,7 @@ extension Attributes {
     var rawAttributes: RawAttributes {
         var result: RawAttributes = [:]
         result[NSBackgroundColorAttributeName] = backgroundColor
+        result[NSBaselineOffsetAttributeName] = baseline
         result[NSForegroundColorAttributeName] = color
         result[NSVerticalGlyphFormAttributeName] = direction?.intValue
         result[NSExpansionAttributeName] = expansion
@@ -215,7 +219,7 @@ extension Attributes {
 
 
 extension NSAttributedString {
-    private var runningAttributes: [String: AnyObject]? {
+    var runningAttributes: [String: AnyObject]? {
         guard length > 0 else {
             return nil
         }
@@ -246,7 +250,7 @@ public extension NSMutableAttributedString {
 }
 
 public extension NSMutableAttributedString {
-    public func add(image: UIImage, setter: AttributeSetter? = nil) -> NSMutableAttributedString {
+    public func add(image: UIImage, bounds: CGRect? = nil, setter: AttributeSetter? = nil) -> NSMutableAttributedString {
         var attributes: Attributes
         if let runningAttributes = self.runningAttributes {
             attributes = Attributes(rawAttributes: runningAttributes)
@@ -254,10 +258,11 @@ public extension NSMutableAttributedString {
             attributes = Attributes()
         }
         setter?(attributes: &attributes)
-
         let attachment = NSTextAttachment()
         attachment.image = image
-        
+        if let bounds = bounds {
+            attachment.bounds = bounds
+        }
         let string = NSMutableAttributedString(attributedString: NSAttributedString(attachment: attachment))
         string.addAttributes(attributes.rawAttributes, range: string.fullRange)
         appendAttributedString(string)
