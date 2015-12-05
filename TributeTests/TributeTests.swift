@@ -809,8 +809,7 @@ class TributeSpec: QuickSpec {
                     string.add("banana") {
                         $0.color = .redColor()
                         $0.font = .systemFontOfSize(20)
-                    }
-                    string.add(image)
+                    }.add(image)
                     expect(string.lastAttributes?[NSFontAttributeName] as? UIFont).to(equal(UIFont.systemFontOfSize(20)))
                     expect(string.lastAttributes?[NSForegroundColorAttributeName] as? UIColor).to(equal(UIColor.redColor()))
                 }
