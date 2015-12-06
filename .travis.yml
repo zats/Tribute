@@ -9,5 +9,6 @@ env:
 before_install:
   - gem install bundle
   - bundle install
-install: echo "<3"
-script: fastlane test
+script:
+  - set -o pipefail
+  - fastlane test
