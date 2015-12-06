@@ -16,11 +16,6 @@ public struct Attributes {
         case Letterpress
     }
     
-    public enum StrokeStyle {
-        case StrokeOnly(percent: Float)
-        case StrokeAndFill(percent: Float)
-    }
-    
     public enum GlyphDirection {
         case Vertical
         case Horizontal
@@ -51,6 +46,19 @@ public struct Attributes {
     public var underlineColor: UIColor?
     public var URL: NSURL?
 
+    public var lineBreakMode: NSLineBreakMode?
+    public var lineSpacing: Float?
+    public var lineHeightMultiplier: Float?
+    public var paragraphSpacingAfter: Float?
+    public var paragraphSpacingBefore: Float?
+    public var headIndent: Float?
+    public var tailIndent: Float?
+    public var firstLineHeadIndent: Float?
+    public var minimumLineHeight: Float?
+    public var maximumLineHeight: Float?
+    public var hyphenationFactor: Float?
+    public var allowsTighteningForTruncation: Bool?
+    
 }
 
 private extension Attributes.TextEffect {
@@ -150,6 +158,57 @@ extension Attributes {
     }
 }
 
+// MARK: Convenience methods
+extension Attributes {
+    public var fontSize: Float {
+        set {
+            self.font = currentFont.fontWithSize(CGFloat(newValue))
+        }
+        get {
+            return Float(currentFont.pointSize)
+        }
+    }
+    
+    public var bold: Bool {
+        set {
+            setTrait(.TraitBold, enabled: newValue)
+        }
+        get {
+            return currentFont.fontDescriptor().symbolicTraits.contains(.TraitBold)
+        }
+    }
+    
+    public var italic: Bool {
+        set {
+            setTrait(.TraitItalic, enabled: newValue)
+        }
+        get {
+            return currentFont.fontDescriptor().symbolicTraits.contains(.TraitItalic)
+        }
+    }
+    
+    private mutating func setTrait(trait: UIFontDescriptorSymbolicTraits, enabled: Bool) {
+        let font = currentFont
+        let descriptor = font.fontDescriptor()
+        var traits = descriptor.symbolicTraits
+        if enabled {
+            traits.insert(trait)
+        } else {
+            traits.remove(trait)
+        }
+        let newDescriptor = descriptor.fontDescriptorWithSymbolicTraits(traits)
+        self.font = UIFont(descriptor: newDescriptor, size: font.pointSize)
+    }
+    
+    private static let defaultFont = UIFont(name: "Helvetica", size: 12)!
+    private var currentFont: UIFont {
+        if let font = self.font {
+            return font
+        } else {
+            return Attributes.defaultFont
+        }
+    }
+}
 
 extension Attributes {
     mutating public func reset() {
@@ -172,12 +231,25 @@ extension Attributes {
         underline = nil
         underlineColor = nil
         URL = nil
+        
+        lineBreakMode = nil
+        lineSpacing = nil
+        lineHeightMultiplier = nil
+        paragraphSpacingAfter = nil
+        paragraphSpacingBefore = nil
+        headIndent = nil
+        tailIndent = nil
+        firstLineHeadIndent = nil
+        minimumLineHeight = nil
+        maximumLineHeight = nil
+        hyphenationFactor = nil
+        allowsTighteningForTruncation = nil
     }
 }
 
 
 extension Attributes {
-    private func anyNotNil(objects: Any? ...) -> Bool {
+    private func isAnyNotNil(objects: Any? ...) -> Bool {
         for object in objects {
             if object != nil {
                 return true
@@ -198,11 +270,26 @@ extension Attributes {
         if let ligature = ligature {
             result[NSLigatureAttributeName] = ligature ? 1 : 0
         }
-        if anyNotNil(leading, alignment) {
-            let paragraph = NSMutableParagraphStyle()
-            if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
-            if let alignment = alignment { paragraph.alignment = alignment }
-            result[NSParagraphStyleAttributeName] = paragraph
+        if isAnyNotNil(leading, alignment, lineBreakMode, lineSpacing, lineHeightMultiplier,
+            paragraphSpacingAfter, paragraphSpacingBefore, headIndent, tailIndent,
+            firstLineHeadIndent, minimumLineHeight, maximumLineHeight, hyphenationFactor,
+            allowsTighteningForTruncation) {
+                let paragraph = NSMutableParagraphStyle()
+                if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
+                if let alignment = alignment { paragraph.alignment = alignment }
+                if let lineBreakMode = lineBreakMode { paragraph.lineBreakMode = lineBreakMode }
+                if let lineSpacing = lineSpacing { paragraph.lineSpacing = CGFloat(lineSpacing) }
+                if let lineHeightMultiplier = lineHeightMultiplier { paragraph.lineHeightMultiple = CGFloat(lineHeightMultiplier) }
+                if let paragraphSpacingAfter = paragraphSpacingAfter { paragraph.paragraphSpacing = CGFloat(paragraphSpacingAfter) }
+                if let paragraphSpacingBefore = paragraphSpacingBefore { paragraph.paragraphSpacingBefore = CGFloat(paragraphSpacingBefore) }
+                if let headIndent = headIndent { paragraph.headIndent = CGFloat(headIndent) }
+                if let tailIndent = tailIndent { paragraph.tailIndent = CGFloat(tailIndent) }
+                if let firstLineHeadIndent = firstLineHeadIndent { paragraph.firstLineHeadIndent = CGFloat(firstLineHeadIndent) }
+                if let minimumLineHeight = minimumLineHeight { paragraph.minimumLineHeight = CGFloat(minimumLineHeight) }
+                if let maximumLineHeight = maximumLineHeight { paragraph.maximumLineHeight = CGFloat(maximumLineHeight) }
+                if let hyphenationFactor = hyphenationFactor { paragraph.hyphenationFactor = hyphenationFactor }
+                if let allowsTighteningForTruncation = allowsTighteningForTruncation { paragraph.allowsDefaultTighteningForTruncation = allowsTighteningForTruncation }
+                result[NSParagraphStyleAttributeName] = paragraph
         }
         result[NSStrikethroughStyleAttributeName] = strikethrough?.rawValue
         result[NSStrikethroughColorAttributeName] = strikethroughColor
@@ -213,6 +300,7 @@ extension Attributes {
         result[NSUnderlineStyleAttributeName] = underline?.rawValue
         result[NSUnderlineColorAttributeName] = underlineColor
         result[NSLinkAttributeName] = URL
+        
         return result
     }
 }
@@ -236,13 +324,20 @@ public extension NSMutableAttributedString {
     public typealias AttributeSetter = (inout attributes: Attributes) -> Void
     
     public func add(text: String, setter: AttributeSetter? = nil) -> NSMutableAttributedString {
-        var attributes: Attributes
-        if let runningAttributes = self.runningAttributes {
-            attributes = Attributes(rawAttributes: runningAttributes)
-        } else {
-            attributes = Attributes()
-        }
+        var attributes = runningOrNewAttributes
         setter?(attributes: &attributes)
+        return add(text, attributes: attributes)
+    }
+    
+    var runningOrNewAttributes: Attributes {
+        if let runningAttributes = self.runningAttributes {
+            return Attributes(rawAttributes: runningAttributes)
+        } else {
+            return Attributes()
+        }
+    }
+    
+    func add(text: String, attributes: Attributes) -> NSMutableAttributedString {
         let attributedString = NSAttributedString(string: text, attributes: attributes.rawAttributes)
         appendAttributedString(attributedString)
         return self
@@ -251,12 +346,7 @@ public extension NSMutableAttributedString {
 
 public extension NSMutableAttributedString {
     public func add(image: UIImage, bounds: CGRect? = nil, setter: AttributeSetter? = nil) -> NSMutableAttributedString {
-        var attributes: Attributes
-        if let runningAttributes = self.runningAttributes {
-            attributes = Attributes(rawAttributes: runningAttributes)
-        } else {
-            attributes = Attributes()
-        }
+        var attributes = runningOrNewAttributes
         setter?(attributes: &attributes)
         let attachment = NSTextAttachment()
         attachment.image = image

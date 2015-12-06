@@ -34,15 +34,30 @@ let string = NSMutableAttributedString()
         $0.URL = nil
         $0.font = UIFont(name: "Courier", size: 14)
         $0.color = [#Color(colorLiteralRed: 0.1819814891, green: 0.6942673326, blue: 0.5302479267, alpha: 1)#]
+        $0.textEffect = .Letterpress
     }
 
 string
+
+
+let s = NSMutableAttributedString().add("Hello "){
+    $0.font = .boldSystemFontOfSize(12)
+    return
+}.add("World") {
+    $0.bold = false
+    $0.italic = true
+    return
+}
+s
+
+
 let page = XCPlaygroundPage.currentPage
 page.needsIndefiniteExecution = true
 
 let label = UILabel()
-label.attributedText = string
+label.attributedText = s
 label.numberOfLines = 0
 label.sizeToFit()
 label.backgroundColor = [#Color(colorLiteralRed: 0.9607843136999999, green: 0.9607843136999999, blue: 0.9607843136999999, alpha: 1)#]
 page.liveView = label
+
