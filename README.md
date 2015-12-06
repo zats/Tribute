@@ -1,18 +1,44 @@
 # Tribute
 
 ```swift
-
 let string = NSMutableAttributedString().add("Hello ") {
-	$0.color = .redColor()
-	$0.underline = .StyleSingle
+    $0.font = .systemFontOfSize(20)
+    $0.color = .redColor()
+    $0.underline = .StyleSingle
 }.add("world ") {
-	$0.font = .systemFontOfSize(20)
-	$0.stroke = .Filled(width: 2)
-	$0.textEffect = .Letterpress
+    $0.stroke = .Filled(width: 2)
+    $0.strokeColor = .orangeColor()
 }.add("of Swift "){
-	$0.font = .systemFontOfSize(12)
-	$0.textEffects = nil
+    $0.font = .systemFontOfSize(12)
+    $0.underline = nil
 }.add(UIImage(named: "swift")!)
+```
+
+Not bad comparing to
+
+```swift
+let string2 = NSMutableAttributedString()
+string2.appendAttributedString(NSAttributedString(string: "Hello ", attributes: [
+    NSFontAttributeName: UIFont.systemFontOfSize(20),
+    NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+    NSForegroundColorAttributeName: UIColor.redColor()
+]))
+string2.appendAttributedString(NSAttributedString(string: "world ", attributes: [
+    NSFontAttributeName: UIFont.systemFontOfSize(20),
+    NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue,
+    NSForegroundColorAttributeName: UIColor.redColor(),
+    NSStrokeColorAttributeName: UIColor.orangeColor(),
+    NSStrokeWidthAttributeName: -2
+]))
+string2.appendAttributedString(NSAttributedString(string: "of Swift ", attributes: [
+    NSFontAttributeName: UIFont.systemFontOfSize(12),
+    NSForegroundColorAttributeName: UIColor.redColor(),
+    NSStrokeColorAttributeName: UIColor.orangeColor(),
+    NSStrokeWidthAttributeName: -2
+]))
+let attachment = NSTextAttachment()
+attachment.image = UIImage(named: "swift")
+string2.appendAttributedString(NSAttributedString(attachment: attachment))
 ```
 
 # Design Goals
