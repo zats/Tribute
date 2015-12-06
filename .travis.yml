@@ -1,14 +1,14 @@
 osx_image: xcode7.1
 rvm:
-	- 2.2.1
+  - 2.2.1
 language: swift
 env:
   global:
-	- LC_CTYPE=en_US.UTF-8
-	- LANG=en_US.UTF-8
+  - LC_CTYPE=en_US.UTF-8
+  - LANG=en_US.UTF-8
 before_install:
-	- gem install bundle
-	- bundle install
-	- xcrun simctl list
+  - gem install bundle
+  - bundle install
+  - xcrun simctl list
 install: echo "<3"
 script: fastlane test
