@@ -14,6 +14,8 @@ let string = NSMutableAttributedString().add("Hello ") {
 }.add(UIImage(named: "swift")!)
 ```
 
+![](https://raw.githubusercontent.com/zats/Tribute/master/docs/attributed-string.png)
+
 Not bad comparing to
 
 ```swift
