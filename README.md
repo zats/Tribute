@@ -48,7 +48,7 @@ string2.appendAttributedString(NSAttributedString(attachment: attachment))
 1. Word processor logic: appending a string should inherit last attributes.
 1. Allow for easy customization of common properties, including toggle bold or change the font size.
 1. Flatten paragraph style and attrbiutes, no more 5 lines of code if all you wanted is to change text alignment.
-1. Replace weird attributes with sanier versions (for example [`Attribute.Stroke`](https://github.com/zats/Tribute/blob/master/Tribute/Tribute.swift#L24-L27) vs [NSStrokeColorAttributeName](https://developer.apple.com/library/mac/qa/qa1531/_index.html)).
+1. Replace weird attributes with sanier versions (for example [`Attribute.Stroke`](https://github.com/zats/Tribute/blob/master/Tribute/Tribute.swift#L24-L27) vs [NSStrokeWidthAttributeName](https://developer.apple.com/library/mac/qa/qa1531/_index.html)).
 1. Minimal overhead: produce only required attributes.
 1. Have an attributed string ready to use every time you leave the configuration block.
 1. Replace string constants with strongly typed enums where possible.
