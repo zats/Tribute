@@ -53,7 +53,7 @@ string2.appendAttributedString(NSAttributedString(attachment: attachment))
 1. Have an attributed string ready to use every time you leave the configuration block.
 1. Replace string constants with strongly typed enums where possible.
 
-# Work
+# Notes
 
 ## Playground
 
