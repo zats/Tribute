@@ -10,7 +10,7 @@ let string = NSMutableAttributedString().add("Hello ") {
     $0.strokeColor = .orangeColor()
 }.add("of Swift "){
     $0.font = .systemFontOfSize(12)
-    $0.underline = nil
+    $0.URL = NSURL(string: "http://swift.org")!
 }.add(UIImage(named: "swift")!)
 ```
 
