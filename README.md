@@ -1,4 +1,4 @@
-# Tribute
+# Tribute [![Build Status](https://travis-ci.org/zats/Tribute.svg?branch=master)](https://travis-ci.org/zats/Tribute)
 
 ```swift
 let string = NSMutableAttributedString().add("Hello ") {
