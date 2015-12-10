@@ -34,7 +34,7 @@ platform :ios do
   desc "Runs all the tests"
   lane :test do
     scan(
-      scheme: "TributeTests",
+      scheme: "Tribute",
       clean: true
     )
   end
