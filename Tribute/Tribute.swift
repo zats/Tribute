@@ -47,7 +47,6 @@ public struct Attributes {
     public var URL: NSURL?
 
     public var lineBreakMode: NSLineBreakMode?
-    public var lineSpacing: Float?
     public var lineHeightMultiplier: Float?
     public var paragraphSpacingAfter: Float?
     public var paragraphSpacingBefore: Float?
@@ -138,6 +137,16 @@ extension Attributes {
             let defaultParagraph = NSParagraphStyle.defaultParagraphStyle()
             self.alignment = (paragraph.alignment == defaultParagraph.alignment) ? nil : paragraph.alignment
             self.leading = (paragraph.lineSpacing == defaultParagraph.lineSpacing) ? nil : Float(paragraph.lineSpacing)
+            self.lineHeightMultiplier = (paragraph.lineHeightMultiple == defaultParagraph.lineHeightMultiple) ? nil : Float(paragraph.lineHeightMultiple)
+            self.paragraphSpacingAfter = (paragraph.paragraphSpacing == defaultParagraph.paragraphSpacing) ? nil : Float(paragraph.paragraphSpacing)
+            self.paragraphSpacingBefore = (paragraph.paragraphSpacingBefore == defaultParagraph.paragraphSpacingBefore) ? nil : Float(paragraph.paragraphSpacingBefore)
+            self.headIndent = (paragraph.headIndent == defaultParagraph.headIndent) ? nil : Float(paragraph.headIndent)
+            self.tailIndent = (paragraph.tailIndent == defaultParagraph.tailIndent) ? nil : Float(paragraph.tailIndent)
+            self.firstLineHeadIndent = (paragraph.firstLineHeadIndent == defaultParagraph.firstLineHeadIndent) ? nil : Float(paragraph.firstLineHeadIndent)
+            self.minimumLineHeight = (paragraph.minimumLineHeight == defaultParagraph.minimumLineHeight) ? nil : Float(paragraph.minimumLineHeight)
+            self.maximumLineHeight = (paragraph.maximumLineHeight == defaultParagraph.maximumLineHeight) ? nil : Float(paragraph.maximumLineHeight)
+            self.hyphenationFactor = (paragraph.hyphenationFactor == defaultParagraph.hyphenationFactor) ? nil : Float(paragraph.hyphenationFactor)
+            self.allowsTighteningForTruncation = (paragraph.allowsDefaultTighteningForTruncation == defaultParagraph.allowsDefaultTighteningForTruncation) ? nil : paragraph.allowsDefaultTighteningForTruncation
         }
         if let strikethrough = attributes[NSStrikethroughStyleAttributeName] as? Int {
             self.strikethrough = NSUnderlineStyle(rawValue: strikethrough)
@@ -160,9 +169,13 @@ extension Attributes {
 
 // MARK: Convenience methods
 extension Attributes {
-    public var fontSize: Float {
+    public var fontSize: Float? {
         set {
-            self.font = currentFont.fontWithSize(CGFloat(newValue))
+            if let newValue = newValue {
+                self.font = currentFont.fontWithSize(CGFloat(newValue))
+            } else {
+                self.font = nil
+            }
         }
         get {
             return Float(currentFont.pointSize)
@@ -233,7 +246,6 @@ extension Attributes {
         URL = nil
         
         lineBreakMode = nil
-        lineSpacing = nil
         lineHeightMultiplier = nil
         paragraphSpacingAfter = nil
         paragraphSpacingBefore = nil
@@ -270,7 +282,7 @@ extension Attributes {
         if let ligature = ligature {
             result[NSLigatureAttributeName] = ligature ? 1 : 0
         }
-        if isAnyNotNil(leading, alignment, lineBreakMode, lineSpacing, lineHeightMultiplier,
+        if isAnyNotNil(leading, alignment, lineBreakMode, lineHeightMultiplier,
             paragraphSpacingAfter, paragraphSpacingBefore, headIndent, tailIndent,
             firstLineHeadIndent, minimumLineHeight, maximumLineHeight, hyphenationFactor,
             allowsTighteningForTruncation) {
@@ -278,7 +290,6 @@ extension Attributes {
                 if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
                 if let alignment = alignment { paragraph.alignment = alignment }
                 if let lineBreakMode = lineBreakMode { paragraph.lineBreakMode = lineBreakMode }
-                if let lineSpacing = lineSpacing { paragraph.lineSpacing = CGFloat(lineSpacing) }
                 if let lineHeightMultiplier = lineHeightMultiplier { paragraph.lineHeightMultiple = CGFloat(lineHeightMultiplier) }
                 if let paragraphSpacingAfter = paragraphSpacingAfter { paragraph.paragraphSpacing = CGFloat(paragraphSpacingAfter) }
                 if let paragraphSpacingBefore = paragraphSpacingBefore { paragraph.paragraphSpacingBefore = CGFloat(paragraphSpacingBefore) }

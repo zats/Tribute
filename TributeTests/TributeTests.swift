@@ -486,6 +486,425 @@ class TributeSpec: QuickSpec {
                 }
             }
             
+            describe("lineBreakMode") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.lineBreakMode = .ByWordWrapping
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.lineBreakMode).to(equal(NSLineBreakMode.ByWordWrapping))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.lineBreakMode = .ByClipping
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.lineBreakMode).to(equal(NSLineBreakMode.ByClipping))
+                        
+                        a.lineBreakMode = .ByTruncatingHead
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.lineBreakMode).to(equal(NSLineBreakMode.ByTruncatingHead))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.lineBreakMode = .ByTruncatingHead
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.lineBreakMode = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+                
+            }
+
+            describe("paragraphSpacingAfter") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.paragraphSpacingAfter = 10
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.paragraphSpacing).to(equal(10))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.paragraphSpacingAfter = 7
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.paragraphSpacing).to(equal(7))
+                        
+                        a.paragraphSpacingAfter = 5
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.paragraphSpacing).to(equal(5))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.paragraphSpacingAfter = 13
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.paragraphSpacingAfter = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+            
+            describe("paragraphSpacingBefore") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.paragraphSpacingBefore = 10
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.paragraphSpacingBefore).to(equal(10))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.paragraphSpacingBefore = 7
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.paragraphSpacingBefore).to(equal(7))
+                        
+                        a.paragraphSpacingBefore = 5
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.paragraphSpacingBefore).to(equal(5))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.paragraphSpacingBefore = 13
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.paragraphSpacingBefore = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+
+            describe("firstLineHeadIndent") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.firstLineHeadIndent = 10
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.firstLineHeadIndent).to(equal(10))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.firstLineHeadIndent = 7
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.firstLineHeadIndent).to(equal(7))
+                        
+                        a.firstLineHeadIndent = 5
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.firstLineHeadIndent).to(equal(5))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.firstLineHeadIndent = 13
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.firstLineHeadIndent = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+
+            describe("minimumLineHeight") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.minimumLineHeight = 10
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.minimumLineHeight).to(equal(10))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.minimumLineHeight = 7
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.minimumLineHeight).to(equal(7))
+                        
+                        a.minimumLineHeight = 5
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.minimumLineHeight).to(equal(5))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.minimumLineHeight = 13
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.minimumLineHeight = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+
+            describe("maximumLineHeight") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.maximumLineHeight = 10
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.maximumLineHeight).to(equal(10))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.maximumLineHeight = 7
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.maximumLineHeight).to(equal(7))
+                        
+                        a.maximumLineHeight = 5
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.maximumLineHeight).to(equal(5))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.maximumLineHeight = 13
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.maximumLineHeight = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+            
+            describe("hyphenationFactor") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.hyphenationFactor = 10
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.hyphenationFactor).to(equal(10))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.hyphenationFactor = 7
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.hyphenationFactor).to(equal(7))
+                        
+                        a.hyphenationFactor = 5
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.hyphenationFactor).to(equal(5))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.hyphenationFactor = 13
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.hyphenationFactor = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+            
+            describe("allowsTighteningForTruncation") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.allowsTighteningForTruncation = true
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.allowsDefaultTighteningForTruncation).to(equal(true))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.allowsTighteningForTruncation = true
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.allowsDefaultTighteningForTruncation).to(equal(true))
+                        
+                        a.allowsTighteningForTruncation = false
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.allowsDefaultTighteningForTruncation).to(equal(false))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.allowsTighteningForTruncation = true
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.allowsTighteningForTruncation = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+            
+            describe("headIndent") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.headIndent = 10
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.headIndent).to(equal(10))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.headIndent = 7
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.headIndent).to(equal(7))
+                        
+                        a.headIndent = 5
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.headIndent).to(equal(5))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.headIndent = 13
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.headIndent = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+
+            describe("tailIndent") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.tailIndent = 10
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.tailIndent).to(equal(10))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.tailIndent = 7
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.tailIndent).to(equal(7))
+                        
+                        a.tailIndent = 5
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.tailIndent).to(equal(5))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.tailIndent = 13
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.tailIndent = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+
+            describe("lineHeightMultiplier") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.lineHeightMultiplier = 10
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.lineHeightMultiple).to(equal(10))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.lineHeightMultiplier = 7
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                        expect(paragraph?.lineHeightMultiple).to(equal(7))
+                        
+                        a.lineHeightMultiplier = 5
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    
+                    let paragraph = string.runningAttributes![NSParagraphStyleAttributeName] as? NSParagraphStyle
+                    expect(paragraph?.lineHeightMultiple).to(equal(5))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.lineHeightMultiplier = 13
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.lineHeightMultiplier = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
+                }
+            }
+
             describe("kern") {
                 it("sets new value") {
                     string.add("potato") { (inout a: Attributes) in
@@ -651,7 +1070,6 @@ class TributeSpec: QuickSpec {
                     }
                     expect(string.runningAttributes).to(haveCount(0))
                 }
-                
             }
             
             describe("strokeColor") {
@@ -731,7 +1149,6 @@ class TributeSpec: QuickSpec {
                     }
                     expect(string.runningAttributes).to(haveCount(0))
                 }
-                
             }
             
             describe("underline") {
@@ -884,6 +1301,42 @@ class TributeSpec: QuickSpec {
                     expect(string.runningAttributes).to(haveCount(1))
                     let attachment = string.runningAttributes?[NSAttachmentAttributeName] as? NSTextAttachment
                     expect(attachment?.bounds).to(equal(imageBounds))
+                }
+            }
+        }
+        
+        context("helpers") {
+            describe("fontSize") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.fontSize = 20
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    expect((string.runningAttributes![NSFontAttributeName] as? UIFont)?.pointSize).to(equal(20))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.fontSize = 20
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes).to(haveCount(1))
+                        expect((string.runningAttributes![NSFontAttributeName] as? UIFont)?.pointSize).to(equal(20))
+                        
+                        a.fontSize = 30
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    expect((string.runningAttributes?[NSFontAttributeName] as? UIFont)?.pointSize).to(equal(30))
+                }
+                
+                it("removes existent value when set to nil") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.fontSize = 30
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        a.fontSize = nil
+                    }
+                    expect(string.runningAttributes).to(haveCount(0))
                 }
             }
         }
