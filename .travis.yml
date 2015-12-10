@@ -10,4 +10,4 @@ before_install:
   - gem install bundle
   - bundle install
 script:
-  - scan
+  - fastlane test
