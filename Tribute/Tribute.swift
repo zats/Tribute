@@ -58,6 +58,9 @@ public struct Attributes {
     public var hyphenationFactor: Float?
     public var allowsTighteningForTruncation: Bool?
     
+    private var paragraph = NSParagraphStyle.defaultParagraphStyle()
+    private var defaultParagraph = NSParagraphStyle.defaultParagraphStyle()
+    
 }
 
 private extension Attributes.TextEffect {
@@ -119,6 +122,14 @@ private extension Attributes.GlyphDirection {
 }
 
 extension Attributes {
+    
+    /// convenience method for comparing attributes on `paragraph` vs `defaultParagrah`
+    private func paraStyleCompare< U:Equatable>(trans:NSParagraphStyle->U) -> U?{
+        let x = trans(paragraph)
+        let y = trans(defaultParagraph)
+        return (x == y) ? nil : x
+    }
+    
     init(rawAttributes attributes: RawAttributes) {
         self.backgroundColor = attributes[NSBackgroundColorAttributeName] as? UIColor
         self.baseline = attributes[NSBaselineOffsetAttributeName] as? Float
@@ -133,21 +144,23 @@ extension Attributes {
         }
         self.kern = attributes[NSKernAttributeName] as? Float
         self.obliqueness = attributes[NSObliquenessAttributeName] as? Float
+        
         if let paragraph = attributes[NSParagraphStyleAttributeName] as? NSParagraphStyle {
-            let defaultParagraph = NSParagraphStyle.defaultParagraphStyle()
-            self.alignment = (paragraph.alignment == defaultParagraph.alignment) ? nil : paragraph.alignment
-            self.leading = (paragraph.lineSpacing == defaultParagraph.lineSpacing) ? nil : Float(paragraph.lineSpacing)
-            self.lineHeightMultiplier = (paragraph.lineHeightMultiple == defaultParagraph.lineHeightMultiple) ? nil : Float(paragraph.lineHeightMultiple)
-            self.paragraphSpacingAfter = (paragraph.paragraphSpacing == defaultParagraph.paragraphSpacing) ? nil : Float(paragraph.paragraphSpacing)
-            self.paragraphSpacingBefore = (paragraph.paragraphSpacingBefore == defaultParagraph.paragraphSpacingBefore) ? nil : Float(paragraph.paragraphSpacingBefore)
-            self.headIndent = (paragraph.headIndent == defaultParagraph.headIndent) ? nil : Float(paragraph.headIndent)
-            self.tailIndent = (paragraph.tailIndent == defaultParagraph.tailIndent) ? nil : Float(paragraph.tailIndent)
-            self.firstLineHeadIndent = (paragraph.firstLineHeadIndent == defaultParagraph.firstLineHeadIndent) ? nil : Float(paragraph.firstLineHeadIndent)
-            self.minimumLineHeight = (paragraph.minimumLineHeight == defaultParagraph.minimumLineHeight) ? nil : Float(paragraph.minimumLineHeight)
-            self.maximumLineHeight = (paragraph.maximumLineHeight == defaultParagraph.maximumLineHeight) ? nil : Float(paragraph.maximumLineHeight)
-            self.hyphenationFactor = (paragraph.hyphenationFactor == defaultParagraph.hyphenationFactor) ? nil : Float(paragraph.hyphenationFactor)
-            self.allowsTighteningForTruncation = (paragraph.allowsDefaultTighteningForTruncation == defaultParagraph.allowsDefaultTighteningForTruncation) ? nil : paragraph.allowsDefaultTighteningForTruncation
+            self.paragraph = paragraph
+            self.alignment = paraStyleCompare { $0.alignment }
+            self.leading = paraStyleCompare { Float($0.lineSpacing) }
+            self.lineHeightMultiplier = paraStyleCompare { Float($0.lineHeightMultiple) }
+            self.paragraphSpacingAfter = paraStyleCompare { Float($0.paragraphSpacing) }
+            self.paragraphSpacingBefore = paraStyleCompare { Float($0.paragraphSpacingBefore) }
+            self.headIndent = paraStyleCompare { Float($0.headIndent) }
+            self.tailIndent = paraStyleCompare { Float($0.tailIndent) }
+            self.firstLineHeadIndent = paraStyleCompare { Float($0.firstLineHeadIndent) }
+            self.minimumLineHeight = paraStyleCompare { Float($0.minimumLineHeight) }
+            self.maximumLineHeight = paraStyleCompare { Float($0.maximumLineHeight) }
+            self.hyphenationFactor = paraStyleCompare { Float($0.hyphenationFactor) }
+            self.allowsTighteningForTruncation = paraStyleCompare { $0.allowsDefaultTighteningForTruncation }
         }
+        
         if let strikethrough = attributes[NSStrikethroughStyleAttributeName] as? Int {
             self.strikethrough = NSUnderlineStyle(rawValue: strikethrough)
         }
