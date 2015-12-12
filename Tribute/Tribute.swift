@@ -58,7 +58,7 @@ public struct Attributes {
     public var hyphenationFactor: Float?
     public var allowsTighteningForTruncation: Bool?
     
-    private var paragraph = NSParagraphStyle()
+    private var paragraph:NSParagraphStyle?
     private static let defaultParagraph = NSParagraphStyle.defaultParagraphStyle()
 }
 
@@ -124,6 +124,9 @@ extension Attributes {
     
     /// convenience method for comparing attributes on `paragraph` vs `defaultParagrah`
     private func paraStyleCompare< U:Equatable>(trans:NSParagraphStyle->U) -> U?{
+        guard let paragraph = paragraph else{
+            return nil
+        }
         let x = trans(paragraph)
         let y = trans(Attributes.defaultParagraph)
         return (x == y) ? nil : x
