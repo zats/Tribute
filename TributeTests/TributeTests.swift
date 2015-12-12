@@ -226,6 +226,29 @@ class TributeSpec: QuickSpec {
                 }
             }
 
+            describe("bold") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.bold = true
+                    }
+                    expect(string.runningAttributes!).to(haveCount(1))
+                    expect(string.runningAttributes![NSFontAttributeName] as? UIFont).to(equal(UIFont.boldSystemFontOfSize(12)))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.bold = true
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes!).to(haveCount(1))
+                        expect(string.runningAttributes![NSFontAttributeName] as? UIFont).to(equal(UIFont.boldSystemFontOfSize(12)))
+                        a.bold = false
+                    }
+                    expect(string.runningAttributes!).to(haveCount(1))
+                    expect(string.runningAttributes![NSFontAttributeName] as? UIFont).to(equal(UIFont.systemFontOfSize(12)))
+                }
+            }
+
             describe("color") {
                 it("sets new value") {
                     string.add("potato") { (inout a: Attributes) in
@@ -377,6 +400,29 @@ class TributeSpec: QuickSpec {
                     }
                     expect(string.runningAttributes).to(haveCount(0))
                 }
+            }
+
+            describe("italics") {
+                it("sets new value") {
+                    string.add("potato") { (inout a: Attributes) in
+                        a.italic = true
+                    }
+                    expect(string.runningAttributes!).to(haveCount(1))
+                    expect(string.runningAttributes![NSFontAttributeName] as? UIFont).to(equal(UIFont.italicSystemFontOfSize(12)))
+                }
+                
+                it("overrides existent value with a new one") {
+                    string.add("tomato") { (inout a: Attributes) in
+                        a.italic = true
+                    }
+                    string.add("potato") { (inout a: Attributes) in
+                        expect(string.runningAttributes!).to(haveCount(1))
+                        expect(string.runningAttributes![NSFontAttributeName] as? UIFont).to(equal(UIFont.italicSystemFontOfSize(12)))
+                        a.italic = false
+                    }
+                    expect(string.runningAttributes!).to(haveCount(1))
+                    expect(string.runningAttributes![NSFontAttributeName] as? UIFont).to(equal(UIFont.systemFontOfSize(12)))
+                }                
             }
 
             describe("leading") {
