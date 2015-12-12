@@ -285,6 +285,34 @@ extension Attributes {
         return false
     }
     
+    
+    private func retrieveParagraph() -> NSMutableParagraphStyle?{
+        if !isAnyNotNil(leading, alignment, lineBreakMode, lineHeightMultiplier,
+            paragraphSpacingAfter, paragraphSpacingBefore, headIndent, tailIndent,
+            firstLineHeadIndent, minimumLineHeight, maximumLineHeight, hyphenationFactor,
+            allowsTighteningForTruncation) {
+                return nil
+        }
+        let paragraph = NSMutableParagraphStyle()
+        
+        if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
+        if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
+        if let alignment = alignment { paragraph.alignment = alignment }
+        if let lineBreakMode = lineBreakMode { paragraph.lineBreakMode = lineBreakMode }
+        if let lineHeightMultiplier = lineHeightMultiplier { paragraph.lineHeightMultiple = CGFloat(lineHeightMultiplier) }
+        if let paragraphSpacingAfter = paragraphSpacingAfter { paragraph.paragraphSpacing = CGFloat(paragraphSpacingAfter) }
+        if let paragraphSpacingBefore = paragraphSpacingBefore { paragraph.paragraphSpacingBefore = CGFloat(paragraphSpacingBefore) }
+        if let headIndent = headIndent { paragraph.headIndent = CGFloat(headIndent) }
+        if let tailIndent = tailIndent { paragraph.tailIndent = CGFloat(tailIndent) }
+        if let firstLineHeadIndent = firstLineHeadIndent { paragraph.firstLineHeadIndent = CGFloat(firstLineHeadIndent) }
+        if let minimumLineHeight = minimumLineHeight { paragraph.minimumLineHeight = CGFloat(minimumLineHeight) }
+        if let maximumLineHeight = maximumLineHeight { paragraph.maximumLineHeight = CGFloat(maximumLineHeight) }
+        if let hyphenationFactor = hyphenationFactor { paragraph.hyphenationFactor = hyphenationFactor }
+        if let allowsTighteningForTruncation = allowsTighteningForTruncation { paragraph.allowsDefaultTighteningForTruncation = allowsTighteningForTruncation }
+        return paragraph
+    }
+    
+    
     var rawAttributes: RawAttributes {
         var result: RawAttributes = [:]
         result[NSBackgroundColorAttributeName] = backgroundColor
@@ -297,25 +325,8 @@ extension Attributes {
         if let ligature = ligature {
             result[NSLigatureAttributeName] = ligature ? 1 : 0
         }
-        if isAnyNotNil(leading, alignment, lineBreakMode, lineHeightMultiplier,
-            paragraphSpacingAfter, paragraphSpacingBefore, headIndent, tailIndent,
-            firstLineHeadIndent, minimumLineHeight, maximumLineHeight, hyphenationFactor,
-            allowsTighteningForTruncation) {
-                let paragraph = NSMutableParagraphStyle()
-                if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
-                if let alignment = alignment { paragraph.alignment = alignment }
-                if let lineBreakMode = lineBreakMode { paragraph.lineBreakMode = lineBreakMode }
-                if let lineHeightMultiplier = lineHeightMultiplier { paragraph.lineHeightMultiple = CGFloat(lineHeightMultiplier) }
-                if let paragraphSpacingAfter = paragraphSpacingAfter { paragraph.paragraphSpacing = CGFloat(paragraphSpacingAfter) }
-                if let paragraphSpacingBefore = paragraphSpacingBefore { paragraph.paragraphSpacingBefore = CGFloat(paragraphSpacingBefore) }
-                if let headIndent = headIndent { paragraph.headIndent = CGFloat(headIndent) }
-                if let tailIndent = tailIndent { paragraph.tailIndent = CGFloat(tailIndent) }
-                if let firstLineHeadIndent = firstLineHeadIndent { paragraph.firstLineHeadIndent = CGFloat(firstLineHeadIndent) }
-                if let minimumLineHeight = minimumLineHeight { paragraph.minimumLineHeight = CGFloat(minimumLineHeight) }
-                if let maximumLineHeight = maximumLineHeight { paragraph.maximumLineHeight = CGFloat(maximumLineHeight) }
-                if let hyphenationFactor = hyphenationFactor { paragraph.hyphenationFactor = hyphenationFactor }
-                if let allowsTighteningForTruncation = allowsTighteningForTruncation { paragraph.allowsDefaultTighteningForTruncation = allowsTighteningForTruncation }
-                result[NSParagraphStyleAttributeName] = paragraph
+        if let paragraph = retrieveParagraph() {
+            result[NSParagraphStyleAttributeName] = paragraph
         }
         result[NSStrikethroughStyleAttributeName] = strikethrough?.rawValue
         result[NSStrikethroughColorAttributeName] = strikethroughColor
