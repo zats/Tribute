@@ -213,7 +213,7 @@ extension Attributes {
         self.font = UIFont(descriptor: newDescriptor, size: font.pointSize)
     }
     
-    private static let defaultFont = UIFont(name: "Helvetica", size: 12)!
+    private static let defaultFont = UIFont.systemFontOfSize(12)
     private var currentFont: UIFont {
         if let font = self.font {
             return font
