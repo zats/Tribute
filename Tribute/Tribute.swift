@@ -25,7 +25,7 @@ public struct Attributes {
         case NotFilled(width: Float)
         case Filled(width: Float)
     }
-
+    
     public var alignment: NSTextAlignment?
     public var backgroundColor: UIColor?
     public var baseline: Float?
@@ -45,7 +45,7 @@ public struct Attributes {
     public var underline: NSUnderlineStyle?
     public var underlineColor: UIColor?
     public var URL: NSURL?
-
+    
     public var lineBreakMode: NSLineBreakMode?
     public var lineHeightMultiplier: Float?
     public var paragraphSpacingAfter: Float?
@@ -160,7 +160,9 @@ extension Attributes {
             self.minimumLineHeight = paraStyleCompare { Float($0.minimumLineHeight) }
             self.maximumLineHeight = paraStyleCompare { Float($0.maximumLineHeight) }
             self.hyphenationFactor = paraStyleCompare { Float($0.hyphenationFactor) }
-            self.allowsTighteningForTruncation = paraStyleCompare { $0.allowsDefaultTighteningForTruncation }
+            if #available(iOS 9.0, *) {
+                self.allowsTighteningForTruncation = paraStyleCompare { $0.allowsDefaultTighteningForTruncation }
+            }
         }
         
         if let strikethrough = attributes[NSStrikethroughStyleAttributeName] as? Int {
@@ -308,7 +310,9 @@ extension Attributes {
         if let minimumLineHeight = minimumLineHeight { paragraph.minimumLineHeight = CGFloat(minimumLineHeight) }
         if let maximumLineHeight = maximumLineHeight { paragraph.maximumLineHeight = CGFloat(maximumLineHeight) }
         if let hyphenationFactor = hyphenationFactor { paragraph.hyphenationFactor = hyphenationFactor }
-        if let allowsTighteningForTruncation = allowsTighteningForTruncation { paragraph.allowsDefaultTighteningForTruncation = allowsTighteningForTruncation }
+        if #available(iOS 9.0, *) {
+            if let allowsTighteningForTruncation = allowsTighteningForTruncation { paragraph.allowsDefaultTighteningForTruncation = allowsTighteningForTruncation }
+        }
         return paragraph
     }
     
