@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Tribute'
-  s.version = '1.0'
+  s.version = '0.1'
   s.summary = 'Programmatic creation of NSAttributedString doesn't have to be a pain'
   s.homepage = 'https://github.com/zats/Tribute'
   s.authors = { 'Sash Zats' => 'sash@zats.io' }
