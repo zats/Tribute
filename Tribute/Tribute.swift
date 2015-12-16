@@ -57,9 +57,6 @@ public struct Attributes {
     public var maximumLineHeight: Float?
     public var hyphenationFactor: Float?
     public var allowsTighteningForTruncation: Bool?
-    
-    private var paragraph:NSParagraphStyle?
-    private static let defaultParagraph = NSParagraphStyle.defaultParagraphStyle()
 }
 
 private extension Attributes.TextEffect {
@@ -121,17 +118,7 @@ private extension Attributes.GlyphDirection {
 }
 
 extension Attributes {
-    
-    /// convenience method for comparing attributes on `paragraph` vs `defaultParagrah`
-    private func paraStyleCompare< U:Equatable>(trans:NSParagraphStyle->U) -> U?{
-        guard let paragraph = paragraph else{
-            return nil
-        }
-        let x = trans(paragraph)
-        let y = trans(Attributes.defaultParagraph)
-        return (x == y) ? nil : x
-    }
-    
+
     init(rawAttributes attributes: RawAttributes) {
         self.backgroundColor = attributes[NSBackgroundColorAttributeName] as? UIColor
         self.baseline = attributes[NSBaselineOffsetAttributeName] as? Float
@@ -148,20 +135,19 @@ extension Attributes {
         self.obliqueness = attributes[NSObliquenessAttributeName] as? Float
         
         if let paragraph = attributes[NSParagraphStyleAttributeName] as? NSParagraphStyle {
-            self.paragraph = paragraph
-            self.alignment = paraStyleCompare { $0.alignment }
-            self.leading = paraStyleCompare { Float($0.lineSpacing) }
-            self.lineHeightMultiplier = paraStyleCompare { Float($0.lineHeightMultiple) }
-            self.paragraphSpacingAfter = paraStyleCompare { Float($0.paragraphSpacing) }
-            self.paragraphSpacingBefore = paraStyleCompare { Float($0.paragraphSpacingBefore) }
-            self.headIndent = paraStyleCompare { Float($0.headIndent) }
-            self.tailIndent = paraStyleCompare { Float($0.tailIndent) }
-            self.firstLineHeadIndent = paraStyleCompare { Float($0.firstLineHeadIndent) }
-            self.minimumLineHeight = paraStyleCompare { Float($0.minimumLineHeight) }
-            self.maximumLineHeight = paraStyleCompare { Float($0.maximumLineHeight) }
-            self.hyphenationFactor = paraStyleCompare { Float($0.hyphenationFactor) }
+            self.alignment = paraStyleCompare(paragraph) { $0.alignment }
+            self.leading = paraStyleCompare(paragraph) { Float($0.lineSpacing) }
+            self.lineHeightMultiplier = paraStyleCompare(paragraph) { Float($0.lineHeightMultiple) }
+            self.paragraphSpacingAfter = paraStyleCompare(paragraph) { Float($0.paragraphSpacing) }
+            self.paragraphSpacingBefore = paraStyleCompare(paragraph) { Float($0.paragraphSpacingBefore) }
+            self.headIndent = paraStyleCompare(paragraph) { Float($0.headIndent) }
+            self.tailIndent = paraStyleCompare(paragraph) { Float($0.tailIndent) }
+            self.firstLineHeadIndent = paraStyleCompare(paragraph) { Float($0.firstLineHeadIndent) }
+            self.minimumLineHeight = paraStyleCompare(paragraph) { Float($0.minimumLineHeight) }
+            self.maximumLineHeight = paraStyleCompare(paragraph) { Float($0.maximumLineHeight) }
+            self.hyphenationFactor = paraStyleCompare(paragraph) { Float($0.hyphenationFactor) }
             if #available(iOS 9.0, *) {
-                self.allowsTighteningForTruncation = paraStyleCompare { $0.allowsDefaultTighteningForTruncation }
+                self.allowsTighteningForTruncation = paraStyleCompare(paragraph) { $0.allowsDefaultTighteningForTruncation }
             }
         }
         
@@ -181,6 +167,13 @@ extension Attributes {
         }
         self.underlineColor = attributes[NSUnderlineColorAttributeName] as? UIColor
         self.URL = attributes[NSLinkAttributeName] as? NSURL
+    }
+    
+    /// convenience method for comparing attributes on `paragraph` vs `defaultParagrah`
+    private func paraStyleCompare<U: Equatable>(paragraph: NSParagraphStyle, trans: NSParagraphStyle -> U) -> U? {
+        let x = trans(paragraph)
+        let y = trans(NSParagraphStyle.defaultParagraphStyle())
+        return (x == y) ? nil : x
     }
 }
 
@@ -278,45 +271,6 @@ extension Attributes {
 
 
 extension Attributes {
-    private func isAnyNotNil(objects: Any? ...) -> Bool {
-        for object in objects {
-            if object != nil {
-                return true
-            }
-        }
-        return false
-    }
-    
-    
-    private func retrieveParagraph() -> NSMutableParagraphStyle?{
-        if !isAnyNotNil(leading, alignment, lineBreakMode, lineHeightMultiplier,
-            paragraphSpacingAfter, paragraphSpacingBefore, headIndent, tailIndent,
-            firstLineHeadIndent, minimumLineHeight, maximumLineHeight, hyphenationFactor,
-            allowsTighteningForTruncation) {
-                return nil
-        }
-        let paragraph = NSMutableParagraphStyle()
-        
-        if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
-        if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
-        if let alignment = alignment { paragraph.alignment = alignment }
-        if let lineBreakMode = lineBreakMode { paragraph.lineBreakMode = lineBreakMode }
-        if let lineHeightMultiplier = lineHeightMultiplier { paragraph.lineHeightMultiple = CGFloat(lineHeightMultiplier) }
-        if let paragraphSpacingAfter = paragraphSpacingAfter { paragraph.paragraphSpacing = CGFloat(paragraphSpacingAfter) }
-        if let paragraphSpacingBefore = paragraphSpacingBefore { paragraph.paragraphSpacingBefore = CGFloat(paragraphSpacingBefore) }
-        if let headIndent = headIndent { paragraph.headIndent = CGFloat(headIndent) }
-        if let tailIndent = tailIndent { paragraph.tailIndent = CGFloat(tailIndent) }
-        if let firstLineHeadIndent = firstLineHeadIndent { paragraph.firstLineHeadIndent = CGFloat(firstLineHeadIndent) }
-        if let minimumLineHeight = minimumLineHeight { paragraph.minimumLineHeight = CGFloat(minimumLineHeight) }
-        if let maximumLineHeight = maximumLineHeight { paragraph.maximumLineHeight = CGFloat(maximumLineHeight) }
-        if let hyphenationFactor = hyphenationFactor { paragraph.hyphenationFactor = hyphenationFactor }
-        if #available(iOS 9.0, *) {
-            if let allowsTighteningForTruncation = allowsTighteningForTruncation { paragraph.allowsDefaultTighteningForTruncation = allowsTighteningForTruncation }
-        }
-        return paragraph
-    }
-    
-    
     var rawAttributes: RawAttributes {
         var result: RawAttributes = [:]
         result[NSBackgroundColorAttributeName] = backgroundColor
@@ -343,6 +297,44 @@ extension Attributes {
         result[NSLinkAttributeName] = URL
         
         return result
+    }
+
+    private func isAnyNotNil(objects: Any? ...) -> Bool {
+        for object in objects {
+            if object != nil {
+                return true
+            }
+        }
+        return false
+    }
+    
+    
+    private func retrieveParagraph() -> NSMutableParagraphStyle? {
+        if !isAnyNotNil(leading, alignment, lineBreakMode, lineHeightMultiplier,
+            paragraphSpacingAfter, paragraphSpacingBefore, headIndent, tailIndent,
+            firstLineHeadIndent, minimumLineHeight, maximumLineHeight, hyphenationFactor,
+            allowsTighteningForTruncation) {
+                return nil
+        }
+        let paragraph = NSMutableParagraphStyle()
+        
+        if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
+        if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
+        if let alignment = alignment { paragraph.alignment = alignment }
+        if let lineBreakMode = lineBreakMode { paragraph.lineBreakMode = lineBreakMode }
+        if let lineHeightMultiplier = lineHeightMultiplier { paragraph.lineHeightMultiple = CGFloat(lineHeightMultiplier) }
+        if let paragraphSpacingAfter = paragraphSpacingAfter { paragraph.paragraphSpacing = CGFloat(paragraphSpacingAfter) }
+        if let paragraphSpacingBefore = paragraphSpacingBefore { paragraph.paragraphSpacingBefore = CGFloat(paragraphSpacingBefore) }
+        if let headIndent = headIndent { paragraph.headIndent = CGFloat(headIndent) }
+        if let tailIndent = tailIndent { paragraph.tailIndent = CGFloat(tailIndent) }
+        if let firstLineHeadIndent = firstLineHeadIndent { paragraph.firstLineHeadIndent = CGFloat(firstLineHeadIndent) }
+        if let minimumLineHeight = minimumLineHeight { paragraph.minimumLineHeight = CGFloat(minimumLineHeight) }
+        if let maximumLineHeight = maximumLineHeight { paragraph.maximumLineHeight = CGFloat(maximumLineHeight) }
+        if let hyphenationFactor = hyphenationFactor { paragraph.hyphenationFactor = hyphenationFactor }
+        if #available(iOS 9.0, *) {
+            if let allowsTighteningForTruncation = allowsTighteningForTruncation { paragraph.allowsDefaultTighteningForTruncation = allowsTighteningForTruncation }
+        }
+        return paragraph
     }
 }
 
