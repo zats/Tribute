@@ -799,6 +799,7 @@ class TributeSpec: QuickSpec {
                 }
             }
             
+        if #available(iOS 9.0, *) {
             describe("allowsTighteningForTruncation") {
                 it("sets new value") {
                     string.add("potato") { (inout a: Attributes) in
@@ -836,6 +837,7 @@ class TributeSpec: QuickSpec {
                     expect(string.runningAttributes).to(haveCount(0))
                 }
             }
+        }
             
             describe("headIndent") {
                 it("sets new value") {
