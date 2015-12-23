@@ -25,7 +25,7 @@ public struct Attributes {
         case NotFilled(width: Float)
         case Filled(width: Float)
     }
-
+    
     public var alignment: NSTextAlignment?
     public var backgroundColor: UIColor?
     public var baseline: Float?
@@ -45,7 +45,7 @@ public struct Attributes {
     public var underline: NSUnderlineStyle?
     public var underlineColor: UIColor?
     public var URL: NSURL?
-
+    
     public var lineBreakMode: NSLineBreakMode?
     public var lineHeightMultiplier: Float?
     public var paragraphSpacingAfter: Float?
@@ -57,7 +57,6 @@ public struct Attributes {
     public var maximumLineHeight: Float?
     public var hyphenationFactor: Float?
     public var allowsTighteningForTruncation: Bool?
-    
 }
 
 private extension Attributes.TextEffect {
@@ -119,6 +118,7 @@ private extension Attributes.GlyphDirection {
 }
 
 extension Attributes {
+
     init(rawAttributes attributes: RawAttributes) {
         self.backgroundColor = attributes[NSBackgroundColorAttributeName] as? UIColor
         self.baseline = attributes[NSBaselineOffsetAttributeName] as? Float
@@ -133,21 +133,24 @@ extension Attributes {
         }
         self.kern = attributes[NSKernAttributeName] as? Float
         self.obliqueness = attributes[NSObliquenessAttributeName] as? Float
+        
         if let paragraph = attributes[NSParagraphStyleAttributeName] as? NSParagraphStyle {
-            let defaultParagraph = NSParagraphStyle.defaultParagraphStyle()
-            self.alignment = (paragraph.alignment == defaultParagraph.alignment) ? nil : paragraph.alignment
-            self.leading = (paragraph.lineSpacing == defaultParagraph.lineSpacing) ? nil : Float(paragraph.lineSpacing)
-            self.lineHeightMultiplier = (paragraph.lineHeightMultiple == defaultParagraph.lineHeightMultiple) ? nil : Float(paragraph.lineHeightMultiple)
-            self.paragraphSpacingAfter = (paragraph.paragraphSpacing == defaultParagraph.paragraphSpacing) ? nil : Float(paragraph.paragraphSpacing)
-            self.paragraphSpacingBefore = (paragraph.paragraphSpacingBefore == defaultParagraph.paragraphSpacingBefore) ? nil : Float(paragraph.paragraphSpacingBefore)
-            self.headIndent = (paragraph.headIndent == defaultParagraph.headIndent) ? nil : Float(paragraph.headIndent)
-            self.tailIndent = (paragraph.tailIndent == defaultParagraph.tailIndent) ? nil : Float(paragraph.tailIndent)
-            self.firstLineHeadIndent = (paragraph.firstLineHeadIndent == defaultParagraph.firstLineHeadIndent) ? nil : Float(paragraph.firstLineHeadIndent)
-            self.minimumLineHeight = (paragraph.minimumLineHeight == defaultParagraph.minimumLineHeight) ? nil : Float(paragraph.minimumLineHeight)
-            self.maximumLineHeight = (paragraph.maximumLineHeight == defaultParagraph.maximumLineHeight) ? nil : Float(paragraph.maximumLineHeight)
-            self.hyphenationFactor = (paragraph.hyphenationFactor == defaultParagraph.hyphenationFactor) ? nil : Float(paragraph.hyphenationFactor)
-            self.allowsTighteningForTruncation = (paragraph.allowsDefaultTighteningForTruncation == defaultParagraph.allowsDefaultTighteningForTruncation) ? nil : paragraph.allowsDefaultTighteningForTruncation
+            self.alignment = paraStyleCompare(paragraph) { $0.alignment }
+            self.leading = paraStyleCompare(paragraph) { Float($0.lineSpacing) }
+            self.lineHeightMultiplier = paraStyleCompare(paragraph) { Float($0.lineHeightMultiple) }
+            self.paragraphSpacingAfter = paraStyleCompare(paragraph) { Float($0.paragraphSpacing) }
+            self.paragraphSpacingBefore = paraStyleCompare(paragraph) { Float($0.paragraphSpacingBefore) }
+            self.headIndent = paraStyleCompare(paragraph) { Float($0.headIndent) }
+            self.tailIndent = paraStyleCompare(paragraph) { Float($0.tailIndent) }
+            self.firstLineHeadIndent = paraStyleCompare(paragraph) { Float($0.firstLineHeadIndent) }
+            self.minimumLineHeight = paraStyleCompare(paragraph) { Float($0.minimumLineHeight) }
+            self.maximumLineHeight = paraStyleCompare(paragraph) { Float($0.maximumLineHeight) }
+            self.hyphenationFactor = paraStyleCompare(paragraph) { Float($0.hyphenationFactor) }
+            if #available(iOS 9.0, *) {
+                self.allowsTighteningForTruncation = paraStyleCompare(paragraph) { $0.allowsDefaultTighteningForTruncation }
+            }
         }
+        
         if let strikethrough = attributes[NSStrikethroughStyleAttributeName] as? Int {
             self.strikethrough = NSUnderlineStyle(rawValue: strikethrough)
         }
@@ -164,6 +167,13 @@ extension Attributes {
         }
         self.underlineColor = attributes[NSUnderlineColorAttributeName] as? UIColor
         self.URL = attributes[NSLinkAttributeName] as? NSURL
+    }
+    
+    /// convenience method for comparing attributes on `paragraph` vs `defaultParagrah`
+    private func paraStyleCompare<U: Equatable>(paragraph: NSParagraphStyle, trans: NSParagraphStyle -> U) -> U? {
+        let x = trans(paragraph)
+        let y = trans(NSParagraphStyle.defaultParagraphStyle())
+        return (x == y) ? nil : x
     }
 }
 
@@ -261,15 +271,6 @@ extension Attributes {
 
 
 extension Attributes {
-    private func isAnyNotNil(objects: Any? ...) -> Bool {
-        for object in objects {
-            if object != nil {
-                return true
-            }
-        }
-        return false
-    }
-    
     var rawAttributes: RawAttributes {
         var result: RawAttributes = [:]
         result[NSBackgroundColorAttributeName] = backgroundColor
@@ -282,25 +283,8 @@ extension Attributes {
         if let ligature = ligature {
             result[NSLigatureAttributeName] = ligature ? 1 : 0
         }
-        if isAnyNotNil(leading, alignment, lineBreakMode, lineHeightMultiplier,
-            paragraphSpacingAfter, paragraphSpacingBefore, headIndent, tailIndent,
-            firstLineHeadIndent, minimumLineHeight, maximumLineHeight, hyphenationFactor,
-            allowsTighteningForTruncation) {
-                let paragraph = NSMutableParagraphStyle()
-                if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
-                if let alignment = alignment { paragraph.alignment = alignment }
-                if let lineBreakMode = lineBreakMode { paragraph.lineBreakMode = lineBreakMode }
-                if let lineHeightMultiplier = lineHeightMultiplier { paragraph.lineHeightMultiple = CGFloat(lineHeightMultiplier) }
-                if let paragraphSpacingAfter = paragraphSpacingAfter { paragraph.paragraphSpacing = CGFloat(paragraphSpacingAfter) }
-                if let paragraphSpacingBefore = paragraphSpacingBefore { paragraph.paragraphSpacingBefore = CGFloat(paragraphSpacingBefore) }
-                if let headIndent = headIndent { paragraph.headIndent = CGFloat(headIndent) }
-                if let tailIndent = tailIndent { paragraph.tailIndent = CGFloat(tailIndent) }
-                if let firstLineHeadIndent = firstLineHeadIndent { paragraph.firstLineHeadIndent = CGFloat(firstLineHeadIndent) }
-                if let minimumLineHeight = minimumLineHeight { paragraph.minimumLineHeight = CGFloat(minimumLineHeight) }
-                if let maximumLineHeight = maximumLineHeight { paragraph.maximumLineHeight = CGFloat(maximumLineHeight) }
-                if let hyphenationFactor = hyphenationFactor { paragraph.hyphenationFactor = hyphenationFactor }
-                if let allowsTighteningForTruncation = allowsTighteningForTruncation { paragraph.allowsDefaultTighteningForTruncation = allowsTighteningForTruncation }
-                result[NSParagraphStyleAttributeName] = paragraph
+        if let paragraph = retrieveParagraph() {
+            result[NSParagraphStyleAttributeName] = paragraph
         }
         result[NSStrikethroughStyleAttributeName] = strikethrough?.rawValue
         result[NSStrikethroughColorAttributeName] = strikethroughColor
@@ -313,6 +297,44 @@ extension Attributes {
         result[NSLinkAttributeName] = URL
         
         return result
+    }
+
+    private func isAnyNotNil(objects: Any? ...) -> Bool {
+        for object in objects {
+            if object != nil {
+                return true
+            }
+        }
+        return false
+    }
+    
+    
+    private func retrieveParagraph() -> NSMutableParagraphStyle? {
+        if !isAnyNotNil(leading, alignment, lineBreakMode, lineHeightMultiplier,
+            paragraphSpacingAfter, paragraphSpacingBefore, headIndent, tailIndent,
+            firstLineHeadIndent, minimumLineHeight, maximumLineHeight, hyphenationFactor,
+            allowsTighteningForTruncation) {
+                return nil
+        }
+        let paragraph = NSMutableParagraphStyle()
+        
+        if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
+        if let leading = leading { paragraph.lineSpacing = CGFloat(leading) }
+        if let alignment = alignment { paragraph.alignment = alignment }
+        if let lineBreakMode = lineBreakMode { paragraph.lineBreakMode = lineBreakMode }
+        if let lineHeightMultiplier = lineHeightMultiplier { paragraph.lineHeightMultiple = CGFloat(lineHeightMultiplier) }
+        if let paragraphSpacingAfter = paragraphSpacingAfter { paragraph.paragraphSpacing = CGFloat(paragraphSpacingAfter) }
+        if let paragraphSpacingBefore = paragraphSpacingBefore { paragraph.paragraphSpacingBefore = CGFloat(paragraphSpacingBefore) }
+        if let headIndent = headIndent { paragraph.headIndent = CGFloat(headIndent) }
+        if let tailIndent = tailIndent { paragraph.tailIndent = CGFloat(tailIndent) }
+        if let firstLineHeadIndent = firstLineHeadIndent { paragraph.firstLineHeadIndent = CGFloat(firstLineHeadIndent) }
+        if let minimumLineHeight = minimumLineHeight { paragraph.minimumLineHeight = CGFloat(minimumLineHeight) }
+        if let maximumLineHeight = maximumLineHeight { paragraph.maximumLineHeight = CGFloat(maximumLineHeight) }
+        if let hyphenationFactor = hyphenationFactor { paragraph.hyphenationFactor = hyphenationFactor }
+        if #available(iOS 9.0, *) {
+            if let allowsTighteningForTruncation = allowsTighteningForTruncation { paragraph.allowsDefaultTighteningForTruncation = allowsTighteningForTruncation }
+        }
+        return paragraph
     }
 }
 
