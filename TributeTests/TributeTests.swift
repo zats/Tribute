@@ -1309,6 +1309,28 @@ class TributeSpec: QuickSpec {
             
         }
         
+        context("localization key"){
+            
+            let key = "localized.greeting"
+            var bundle:NSBundle!
+            var localized:String!
+            
+            beforeSuite {
+                bundle = NSBundle(forClass: self.dynamicType)
+                localized = NSLocalizedString(key, tableName: "Localizable", bundle: bundle, value: "", comment: "")
+            }
+            
+            describe("adding attributes to localized string") {
+                it("just works") {
+                    string.add(key:key, tableName:"Localizable", bundle:bundle){ (inout a: Attributes) in
+                        a.underlineColor = .redColor()
+                    }
+                    expect(string.runningAttributes).to(haveCount(1))
+                    expect(string.string).to(match(localized))
+                }
+            }
+        }
+        
         context("image") {
             var image: UIImage!
             beforeSuite {

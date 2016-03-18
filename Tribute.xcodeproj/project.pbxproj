@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0940C18C1C9C18BA006B97D3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0940C18B1C9C18BA006B97D3 /* Localizable.strings */; };
 		5C68695C1C077A490087A134 /* Nimble.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695A1C077A490087A134 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5C68695D1C077A490087A134 /* Quick.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695B1C077A490087A134 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5C68695E1C077A530087A134 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C68695A1C077A490087A134 /* Nimble.framework */; };
@@ -45,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0940C18B1C9C18BA006B97D3 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		5C68695A1C077A490087A134 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		5C68695B1C077A490087A134 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = ../Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		5C6AEDE01C1131BA00C22FAC /* Tribute.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Tribute.playground; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			children = (
 				5C6AEDE21C12060000C22FAC /* swift.png */,
 				5C6AEDE31C12060000C22FAC /* swift@2x.png */,
+				0940C18B1C9C18BA006B97D3 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C6AEDE51C12060000C22FAC /* swift@2x.png in Resources */,
+				0940C18C1C9C18BA006B97D3 /* Localizable.strings in Resources */,
 				5C6AEDE41C12060000C22FAC /* swift.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
