@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  Tribute
+
+  Created by Alyona on 3/18/16.
+  Copyright © 2016 Sash Zats. All rights reserved.
+*/
+
+"localized.greeting"="Hi there!";

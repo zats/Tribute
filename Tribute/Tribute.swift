@@ -362,6 +362,12 @@ public extension NSMutableAttributedString {
         return add(text, attributes: attributes)
     }
     
+    public func add(key key: String, tableName: String? = "Localizable", bundle: NSBundle = NSBundle.mainBundle(), value: String? = nil, comment: String? = nil, setter: AttributeSetter? = nil) -> NSMutableAttributedString {
+        
+        let text = NSLocalizedString(key, tableName: tableName, bundle: bundle, value: value ?? key, comment: comment ?? key)
+        return self.add(text, setter:setter)
+    }
+    
     var runningOrNewAttributes: Attributes {
         if let runningAttributes = self.runningAttributes {
             return Attributes(rawAttributes: runningAttributes)
